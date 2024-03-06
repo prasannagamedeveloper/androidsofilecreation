@@ -13,6 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Setup NDK
+        env:
+          ANDROID_NDK_HOME: C:/Users/axon8/AppData/Local/Android/Sdk/ndk/25.1.8937393
+        run: echo "NDK path set to $ANDROID_NDK_HOME"
+
       - name: Set up Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -39,5 +44,5 @@ jobs:
 
       - name: Build for Android
         run: |
-          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$RUNNER_TOOL_CACHE/android-ndk-21.4.7075529/cmake/android.toolchain.cmake
+          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/cmake/android.toolchain.cmake -G "Unix Makefiles"
           cmake --build build
