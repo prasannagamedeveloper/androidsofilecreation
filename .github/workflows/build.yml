@@ -34,6 +34,10 @@ jobs:
         run: |
           sudo apt-get install -y android-tools-adb
 
+      - name: Check adb
+        run: |
+          which adb
+
       - name: Set up CMake
         run: sudo apt-get install -y cmake
 
