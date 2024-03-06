@@ -3,7 +3,7 @@ name: Build and Generate SO Files
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
