@@ -35,11 +35,11 @@ jobs:
           enable-hw-keyboard: false
           channel: stable
         env:
-          PATH: ${{ runner.toolsDirectory }}/adb:${{ runner.toolsDirectory }}/platform-tools
+          PATH: ${{ runner.toolsDirectory }}:$PATH
 
       - name: Install Android Tools
         run: |
-          sudo apt-get install -y android-tools-adb
+          sudo apt-get update && sudo apt-get install -y android-tools-adb
 
       - name: Set up CMake
         run: sudo apt-get install -y cmake
