@@ -1,47 +1,36 @@
-name: Build and Generate SO Files
+- name: Set up Android Emulator
+  uses: reactivecircus/android-emulator-runner@v2
+  with:
+    api-level: 21
+    target: default
+    arch: x86
+    cores: 2
+    avd-name: test
+    force-avd-creation: true
+    emulator-boot-timeout: 600
+    emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+    disable-animations: true
+    disable-spellchecker: false
+    disable-linux-hw-accel: auto
+    enable-hw-keyboard: false
+    channel: stable
+  env:
+    ANDROID_NDK_HOME: C:/Users/axon8/AppData/Local/Android/Sdk/ndk/25.1.8937393
+    ANDROID_SDK_ROOT: C:/Users/axon8/AppData/Local/Android/Sdk
+    PATH: ${{ runner.temp }}/android-sdk/platform-tools
 
-on:
-  push:
-    branches:
-      - master
+- name: Check adb version
+  run: |
+    adb version
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+- name: Install Android Tools
+  run: |
+    sudo apt-get update && sudo apt-get install -y android-tools-adb
 
-    env:
-      ANDROID_NDK_HOME: C:/Users/axon8/AppData/Local/Android/Sdk/ndk/25.1.8937393
-      ANDROID_SDK_ROOT: C:/Users/axon8/AppData/Local/Android/Sdk
+- name: Set up CMake
+  run: sudo apt-get install -y cmake
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Android Emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 21
-          target: default
-          arch: x86
-          cores: 2
-          avd-name: test
-          force-avd-creation: true
-          emulator-boot-timeout: 600
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          disable-animations: true
-          disable-spellchecker: false
-          disable-linux-hw-accel: auto
-          enable-hw-keyboard: false
-          channel: stable
-
-      - name: Install Android Tools
-        run: |
-          sudo apt-get update && sudo apt-get install -y android-tools-adb
-
-      - name: Set up CMake
-        run: sudo apt-get install -y cmake
-
-      - name: Build for Android
-        run: |
-          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/cmake/android.toolchain.cmake
-          cmake --build build
+- name: Build for Android
+  run: |
+    cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$RUNNER_TOOL_CACHE/android-ndk-21.4.7075529/cmake/android.toolchain.cmake
+    cmake --build build
