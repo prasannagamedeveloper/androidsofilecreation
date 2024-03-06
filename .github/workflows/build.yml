@@ -1,4 +1,4 @@
-name: Build and Generate SO Files
+- name: Build and Generate SO Files
 
 on:
   push:
@@ -35,7 +35,8 @@ jobs:
           enable-hw-keyboard: false
           channel: stable
         env:
-          PATH: ${{ runner.toolsDirectory }}:$PATH
+          # Add suggested code here
+          ANDROID_SDK_ROOT: C:\Users\axon8\AppData\Local\Android\Sdk
 
       - name: Install Android Tools
         run: |
@@ -48,4 +49,3 @@ jobs:
         run: |
           cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$RUNNER_TOOL_CACHE/android-ndk-21.4.7075529/cmake/android.toolchain.cmake
           cmake --build build
-
