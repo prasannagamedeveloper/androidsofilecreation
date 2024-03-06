@@ -28,11 +28,12 @@ jobs:
           channel: stable
         env:
           ANDROID_NDK_HOME: C:/Users/axon8/AppData/Local/Android/Sdk/ndk/25.1.8937393
-          ANDROID_SDK_ROOT: C:/Users/axon8/AppData/Local/Android/Sdk
-          PATH: ${{ runner.temp }}/android-sdk/platform-tools
+          ANDROID_SDK_ROOT: C:\Users\axon8\AppData\Local\Android\Sdk
+          PATH: C:\Users\axon8\AppData\Local\Android\Sdk\platform-tools
 
       - name: Check adb version
-        run: adb version
+        run: |
+          C:\Users\axon8\AppData\Local\Android\Sdk\platform-tools\adb version
 
       - name: Install Android Tools
         run: |
