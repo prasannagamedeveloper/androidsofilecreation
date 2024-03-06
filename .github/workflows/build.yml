@@ -1,4 +1,4 @@
-- name: Build and Generate SO Files
+name: Build and Generate SO Files
 
 on:
   push:
@@ -9,14 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      ANDROID_NDK_HOME: C:/Users/axon8/AppData/Local/Android/Sdk/ndk/25.1.8937393
+      ANDROID_SDK_ROOT: C:/Users/axon8/AppData/Local/Android/Sdk
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Setup NDK
-        env:
-          ANDROID_NDK_HOME: C:/Users/axon8/AppData/Local/Android/Sdk/ndk/25.1.8937393
-        run: echo "NDK path set to $ANDROID_NDK_HOME"
 
       - name: Set up Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
@@ -34,9 +33,6 @@ jobs:
           disable-linux-hw-accel: auto
           enable-hw-keyboard: false
           channel: stable
-        env:
-          # Add suggested code here
-          ANDROID_SDK_ROOT: C:\Users\axon8\AppData\Local\Android\Sdk
 
       - name: Install Android Tools
         run: |
@@ -47,5 +43,5 @@ jobs:
 
       - name: Build for Android
         run: |
-          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$RUNNER_TOOL_CACHE/android-ndk-21.4.7075529/cmake/android.toolchain.cmake
+          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/cmake/android.toolchain.cmake
           cmake --build build
