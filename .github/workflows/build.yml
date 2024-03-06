@@ -1,4 +1,4 @@
-name: Build and Generate SO Files
+name: Build and Generate SO Files for AndroidSOfileCreation
 
 on:
   push:
@@ -21,5 +21,5 @@ jobs:
 
       - name: Build for Android
         run: |
-          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$RUNNER_TOOL_CACHE/android-ndk-21.4.7075529/build/cmake/android.toolchain.cmake
+          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$RUNNER_TOOL_CACHE/android-ndk-21.4.7075529/cmake/android.toolchain.cmake -G "Unix Makefiles"
           cmake --build build
