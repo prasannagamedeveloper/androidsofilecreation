@@ -1,0 +1,24 @@
+name: Build and Generate SO Files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Android NDK
+        uses: beeman/android-ndk@v2
+        with:
+          api-level: 21
+
+      - name: Build for Android
+        run: |
+          cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=$NDK/toolchains/llvm/prebuilt/linux-x86_64/android.toolchain.cmake
+          cmake --build build
