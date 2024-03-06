@@ -23,6 +23,3 @@ jobs:
         run: |
           cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$RUNNER_TOOL_CACHE/android-ndk-21.4.7075529/cmake/android.toolchain.cmake -G "Visual Studio"
           cmake --build build
-- name: Print NDK Cache Contents
-  run: |
-    ls -R $RUNNER_TOOL_CACHE/android-ndk-21.4.7075529
