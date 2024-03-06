@@ -1,4 +1,4 @@
-name: Build and Generate SO Files for AndroidSOfileCreation
+name: Build and Generate SO Files
 
 on:
   push:
