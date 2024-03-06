@@ -14,12 +14,16 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Android NDK
-        uses: nttld/setup-ndk@v1
+        uses: nakiostudio/setup-android-ndk@v2
         with:
-          ndk-version: r21e
-          add-to-path: true  # Adjust based on your requirements
+          version: '21.4.7075529'
+
+      - name: Set up CMake
+        uses: actions/setup-cmake@v2
+        with:
+          cmake-version: '3.21.3'
 
       - name: Build for Android
         run: |
-          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$RUNNER_TOOL_CACHE/android-ndk-21.4.7075529/cmake/android.toolchain.cmake -G "Ninja"
+          cmake -S app/src/main -B build -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake
           cmake --build build
