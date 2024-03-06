@@ -34,6 +34,9 @@ jobs:
           disable-linux-hw-accel: auto
           enable-hw-keyboard: false
           channel: stable
+        env:
+          PATH: ${{ runner.toolsDirectory }}/adb:${{ runner.toolsDirectory }}/platform-tools
+
 
       - name: Install Android Tools
         run: |
